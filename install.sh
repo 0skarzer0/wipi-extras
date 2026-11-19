@@ -29,6 +29,7 @@ install_osm() {
     cp osm-fotos/netbootmenu_fotos.bin "$MENU/netbootmenu.bin.dark"
     cp osm-fotos/netbootmenu_fotos.bin "$MENU/netbootmenu.bin"
     python3 osm-fotos/patch_netdimm_menu.py "$NB/scripts/netdimm_menu.py"
+    python3 fixes/patch_menulauncher.py || true  # evita varias instancias del menu (Communication Error)
     python3 -m py_compile "$NB/scripts/netdimm_menu.py"
     md5sum "$MENU/netbootmenu.bin"
 }

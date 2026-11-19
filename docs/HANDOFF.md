@@ -65,3 +65,7 @@ Para retomar el trabajo en otra sesión (Claude u otra persona).
 Ver `osm-fotos/imagenes/README.md` (sección "Previews de TODOS los juegos"). Estado: .250 170/170 y .251 54/54 con foto, salvo
 `h-jvstest` (.251, logo) y los 4 roms sin captura. Trampas: `device_bash` limita a 45 s y mata lo que queda en segundo plano; subir ficheros
 grandes en trozos de 4 MB con `put*.sh` y unir con `cat`; no usar `grep csv` sobre la salida del script (470 líneas).
+
+## 2026-11-19: "Communication Error!" en las dos NAOMI
+Había varias instancias de `netdimm_menu` a la vez (WiPi no cierra la anterior en modo normal). Se arregló con `fixes/patch_menulauncher.py`
+(aplicado en .250 y .251) y se dejó una sola instancia en cada Pi. Ver `fixes/README.md`.
