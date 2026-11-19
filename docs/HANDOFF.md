@@ -71,3 +71,5 @@ Había varias instancias de `netdimm_menu` a la vez (WiPi no cierra la anterior 
 (aplicado en .250 y .251) y se dejó una sola instancia en cada Pi. Ver `fixes/README.md`.
 Segunda causa (al elegir juego): lectura de la foto con `cart_read` de una vez = interrupciones desactivadas demasiado tiempo.
 Se lee en trozos de 512 B (ver `fixes/README.md`). Menú nuevo instalado en .250 y .251.
+CAUSA REAL: protocolo de mensajes. WiPi usa checksums sin semilla; la libnaomi nueva usa semillas 3/7/19. Se compila libnaomi con
+semillas 0 (`osm-fotos/libnaomi-patch/`). Si se recompila el menú, NO olvidar este parche o el menú no podrá cargar juegos.

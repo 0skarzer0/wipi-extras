@@ -45,7 +45,10 @@ se baja de `https://zlib.net/fossils/zlib-1.2.12.tar.gz` a `3rdparty/zlib/downlo
 
 ```
 source /opt/toolchains/naomi/env.sh
+# IMPRESCINDIBLE para WiPi: protocolo de mensajes antiguo (sin esto el menú no puede cargar juegos)
+(cd libnaomi && git apply ../osm-fotos/libnaomi-patch/packet-seeds-wipi.patch)
 make -C libnaomi && make -C libnaomi install
+make -C libnaomi/libnaomi/message && make -C libnaomi/libnaomi/message install
 make -C osm-fotos/netbootmenu   # da netbootmenu.bin: copiarlo como osm-fotos/netbootmenu_fotos.bin
 ```
 

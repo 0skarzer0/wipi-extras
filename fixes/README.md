@@ -24,4 +24,18 @@ menú (peek/poke de los registros 0xC0DE10..60) mediante interrupciones. Con los
 (decenas de KB comprimidas) la lectura de la foto dejaba sin atender a la NetDIMM y se perdía la comunicación al elegir juego.
 
 **Arreglo:** `osm-fotos/netbootmenu/thumbs.c` lee la foto en trozos de 512 bytes (`THUMB_READ_CHUNK`), con las interrupciones
-activas entre trozos. Nuevo `netbootmenu_fotos.bin` (md5 9443546d89d88cf5a6ba2744004e2f5d).
+activas entre trozos. Nuevo `netbootmenu_fotos.bin` (md5 60183249e1d70e57fc6f5039bdaa3163).
+
+## La causa real del "Communication Error!" al elegir juego: protocolo de mensajes distinto
+
+Lo de la foto (sección anterior) no era la causa. La librería de mensajes de WiPi (`/sbin/piforce/dm_netboot/netdimm/message.py`)
+es la versión antigua del protocolo de DragonMinded: los checksums de los registros 0xC0DE20/30/40 no llevan semilla.
+La libnaomi actual (sega-dreamcast/libnaomi, con la que se compiló el menú con fotos) suma una semilla (3, 7 y 19).
+La Pi descartaba todas las respuestas de la NAOMI como inválidas (cada sondeo agotaba los 2 s de `MAX_READ_TIMEOUT`)
+y nunca recibía la elección del juego. A los 5 s el menú mostraba "Communication Error!".
+
+Cómo se vio: con `netdimm_menu` parado, leyendo los registros desde la Pi: config `E9000003`, que solo es válido con la semilla 19.
+
+**Arreglo:** compilar libnaomi con las semillas a 0 (`osm-fotos/libnaomi-patch/packet-seeds-wipi.patch`, en
+`libnaomi/message/packet.c`; luego `make && make install` en `libnaomi/message` y volver a enlazar el menú).
+Nuevo `netbootmenu_fotos.bin`: md5 60183249e1d70e57fc6f5039bdaa3163. Leer la foto por trozos se deja igualmente: no hace daño.

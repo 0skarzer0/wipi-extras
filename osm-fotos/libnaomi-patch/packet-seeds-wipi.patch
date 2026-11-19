@@ -1,0 +1,17 @@
+diff --git a/libnaomi/message/packet.c b/libnaomi/message/packet.c
+index 84bde9b..9df79b6 100644
+--- a/libnaomi/message/packet.c
++++ b/libnaomi/message/packet.c
+@@ -6,9 +6,9 @@
+ #include "naomi/interrupt.h"
+ #include "naomi/message/packet.h"
+ 
+-#define SEND_STATUS_REGISTER_SEED 3
+-#define RECV_STATUS_REGISTER_SEED 7
+-#define CONFIG_REGISTER_SEED 19
++#define SEND_STATUS_REGISTER_SEED 0  // wipi-extras: 0 = protocolo de WiPi (era 3)
++#define RECV_STATUS_REGISTER_SEED 0  // wipi-extras: era 7
++#define CONFIG_REGISTER_SEED 0  // wipi-extras: era 19
+ typedef struct
+ {
+     packet_t *pending_packets[MAX_OUTSTANDING_PACKETS];
