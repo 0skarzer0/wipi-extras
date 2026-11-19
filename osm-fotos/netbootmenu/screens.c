@@ -13,6 +13,7 @@
 #include "config.h"
 #include "screens.h"
 #include "thumbs.h"
+#include <naomi/rtc.h>
 #include "controls.h"
 
 #define READ_ONLY_ALWAYS -1
@@ -522,6 +523,8 @@ void send_game_options(game_options_t *parsed_options)
 #define SCREEN_GAME_LOAD 7
 #define SCREEN_GAME_UNPACK 8
 
+// wipi-extras: segundos sin tocar nada en la lista antes de cargar un juego al azar (0 = desactivado).
+#define ATTRACT_IDLE_SECONDS 60.0
 #define MAX_WAIT_FOR_COMMS 30.0  // wipi-extras: WiPi descomprime la ROM .gz antes de contestar (era 5.0)
 #define MAX_WAIT_FOR_SAVE 8.0
 
@@ -661,6 +664,8 @@ unsigned int main_menu(state_t *state, int reinit)
     static unsigned int thumb_cursor = 0;
     static double thumb_moved = 0.0;
     static char **short_names = 0;
+    static double last_activity = 0.0;
+    static uint32_t random_state = 0;
 
     if (reinit)
     {
@@ -727,6 +732,7 @@ unsigned int main_menu(state_t *state, int reinit)
 
         // Clear any error screens.
         state->test_error_counter = 0.0;
+        last_activity = state->animation_counter;
     }
 
     // If we need to switch screens.
@@ -813,6 +819,45 @@ unsigned int main_menu(state_t *state, int reinit)
                 }
             }
         }
+    }
+
+    // wipi-extras: if nobody touches anything for a while, boot a random game.
+    if (controls.up_pressed || controls.down_pressed || controls.left_pressed || controls.right_pressed ||
+        controls.test_pressed || controls.service_pressed || controls.start_pressed || controls.start_released)
+    {
+        last_activity = state->animation_counter;
+    }
+    if (ATTRACT_IDLE_SECONDS > 0.0 && count > 0 && booting == 0 && holding == 0 && new_screen == SCREEN_MAIN_MENU &&
+        (state->animation_counter - last_activity) >= ATTRACT_IDLE_SECONDS)
+    {
+        // Simple LCG. The menu starts the same way every time, so the seed is the board's clock
+        // (seconds) mixed with the last played game and the frame timing.
+        random_state ^= rtc_get() * 2654435761u;
+        random_state ^= (uint32_t)cursor * 40503u;
+        random_state = random_state * 1103515245 + 12345 + (uint32_t)(state->animation_counter * 1000.0);
+        random_state = random_state * 1103515245 + 12345;
+        unsigned int pick = (random_state >> 8) % count;
+        if (count > 1 && pick == cursor)
+        {
+            pick = (pick + 1) % count;
+        }
+        cursor = pick;
+        if (cursor < top)
+        {
+            top = cursor;
+        }
+        if (cursor >= (top + maxgames))
+        {
+            top = cursor - (maxgames - 1);
+        }
+
+        // Same as pressing start on it.
+        controls_locked = 1;
+        booting = 1;
+        holding = 0;
+        booting_animation = state->animation_counter;
+        holding_animation = state->animation_counter;
+        message_send(MESSAGE_SELECTION, &cursor, 4);
     }
 
     // See if we got any messages from the host.

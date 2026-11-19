@@ -73,3 +73,7 @@ Segunda causa (al elegir juego): lectura de la foto con `cart_read` de una vez =
 Se lee en trozos de 512 B (ver `fixes/README.md`). Menú nuevo instalado en .250 y .251.
 CAUSA REAL: protocolo de mensajes. WiPi usa checksums sin semilla; la libnaomi nueva usa semillas 3/7/19. Se compila libnaomi con
 semillas 0 (`osm-fotos/libnaomi-patch/`). Si se recompila el menú, NO olvidar este parche o el menú no podrá cargar juegos.
+
+## 2026-11-19: juego al azar tras 60 s sin tocar nada
+`ATTRACT_IDLE_SECONDS` en `osm-fotos/netbootmenu/screens.c`. Menú md5 b14b1e07568ee12203c628105530c286, instalado en .250 y .251.
+Duda pendiente: en el mueble del volante, si el ruido del volante analógico generase pulsaciones, el temporizador no llegaría a saltar.

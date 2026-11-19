@@ -76,3 +76,10 @@ las fotos y luego 0,1 s. «Está perfecto».
 
 Cambios respecto al menú original: `thumbs.c`/`thumbs.h` (nuevos), `config.h` (campo `thumbs_offset`), `screens.c`
 (dibujo de la foto, nombres cortados y el nombre como argumento de `%s` en vez de como formato), `Makefile`.
+
+## Juego al azar si nadie toca nada (modo "attract")
+
+Si en la lista de juegos no se pulsa nada (direcciones, Start, Test o Service) durante 60 s, el menú elige un juego al azar
+(distinto del que está bajo el cursor) y lo carga como si se hubiera pulsado Start. Se cambia con `ATTRACT_IDLE_SECONDS`
+en `netbootmenu/screens.c` (0 lo desactiva). El azar se siembra con el reloj de la placa (`rtc_get()`), porque el menú
+arranca siempre igual y el contador de tiempo daría siempre el mismo juego.
