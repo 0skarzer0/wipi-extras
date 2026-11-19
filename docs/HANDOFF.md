@@ -60,3 +60,8 @@ Para retomar el trabajo en otra sesión (Claude u otra persona).
   los colores; sin comprobar).
 - Que dc2naomi tome los scripts de la VMU de aquí, para no tener dos copias.
 - Tarjetas de Initial D.
+
+## 2026-11-19: previews para todos
+Ver `osm-fotos/imagenes/README.md` (sección "Previews de TODOS los juegos"). Estado: .250 170/170 y .251 54/54 con foto, salvo
+`h-jvstest` (.251, logo) y los 4 roms sin captura. Trampas: `device_bash` limita a 45 s y mata lo que queda en segundo plano; subir ficheros
+grandes en trozos de 4 MB con `put*.sh` y unir con `cat`; no usar `grep csv` sobre la salida del script (470 líneas).

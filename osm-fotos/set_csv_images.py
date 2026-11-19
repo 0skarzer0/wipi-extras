@@ -5,11 +5,12 @@ Uso (en la Raspberry, como root):
     python3 set_csv_images.py MAPA.tsv CARPETA_CON_LOS_PNG            # solo enseña lo que haría
     python3 set_csv_images.py MAPA.tsv CARPETA_CON_LOS_PNG --apply    # lo hace
     ... --apply --replace    # además sustituye los PNG que ya existan con esos nombres
+    ... --apply --force-csv  # además cambia la imagen de la fila aunque ya tuviera otra (p. ej. un logo)
 
 MAPA.tsv: una línea por juego, `fichero_del_juego.bin.gz<TAB>imagen.png` (las demás columnas, si las hay, se ignoran).
 
 - Edita /boot/config/romsinfo.csv y /var/www/html/csv/romsinfo.csv (las dos copias que usa WiPi) a nivel de texto:
-  solo cambia la columna 3 de la fila de ese juego, y solo si está vacía; el resto de la fila y del fichero queda
+  solo cambia la columna 3 de la fila de ese juego, y solo si está vacía (o siempre con --force-csv); el resto de la fila y del fichero queda
   byte por byte igual (comillas, saltos de línea).
 - Antes guarda una copia de cada CSV como romsinfo.csv.bak_osmfotos (solo la primera vez).
 - Copia los PNG a /boot/config/images (la web del WiPi la ve como /var/www/html/images) sin pisar ninguno que ya exista
@@ -17,6 +18,7 @@ MAPA.tsv: una línea por juego, `fichero_del_juego.bin.gz<TAB>imagen.png` (las d
 - Se puede repetir: lo que ya está puesto se salta.
 """
 import os
+import re
 import shutil
 import sys
 
@@ -28,6 +30,7 @@ def main() -> int:
     args = [a for a in sys.argv[1:] if not a.startswith("--")]
     apply = "--apply" in sys.argv
     replace = "--replace" in sys.argv
+    force_csv = "--force-csv" in sys.argv
     if len(args) != 2:
         print(__doc__)
         return 1
@@ -64,6 +67,13 @@ def main() -> int:
             old = ("," + name + ",,").encode("utf-8")
             new = ("," + name + "," + image + ",").encode("utf-8")
             n = data.count(old)
+            if n == 0 and force_csv:
+                pat = re.compile(b"," + re.escape(name.encode("utf-8")) + b",([^,\\r\\n\"]*),")
+                found = pat.findall(data)
+                if len(found) == 1 and found[0] != image.encode("utf-8"):
+                    data = pat.sub(lambda m: new, data)
+                    changed += 1
+                    continue
             if n == 0:
                 if ("," + name + "," + image + ",").encode("utf-8") in data:
                     continue  # ya puesta

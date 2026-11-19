@@ -32,3 +32,18 @@ como hacen los scrapers de los emuladores.
 - **[libretro-thumbnails](https://github.com/libretro-thumbnails)** (el equipo de libretro/RetroArch y quienes
   aportan las capturas): de ahí salen las imágenes. Las capturas, logos y títulos pertenecen a sus respectivos
   autores y editores.
+
+## Previews de TODOS los juegos (2026-11-19)
+
+Se sustituyeron los logos por capturas de partida en las dos cabinas (.250 y .251).
+
+- `mapa-previews.tsv`: `rom<TAB>png nuevo<TAB>repo libretro-thumbnails<TAB>nombre de la captura` (190 juegos).
+  Repos usados: `Sega_-_Naomi`, `Sega_-_Naomi_2`, `Atomiswave`, `Sega_-_Dreamcast`, `Nintendo_-_Nintendo_64` (Mario Kart 64) y `MAME`
+  (RoboCop de Data East, juegos de Yu Suzuki, Hang-On, OutRun, Space Harrier, Power Drift, After Burner II, Super Sprint, Konami GT, Daytona Model 2...).
+- `fetch_previews.py`: baja solo esas capturas (clon parcial de cada repo en `LIBRETRO_DIR`, resuelve los enlaces simbólicos) y las deja en `final/`.
+- Se reducen a 320 px máx., se suben a la Pi (`/root/pv`, con `mapa.tsv` = columnas 1 y 2) y se aplican con
+  `python3 set_csv_images.py pv/mapa.tsv pv --apply --force-csv --replace` (`--force-csv` cambia la imagen aunque la fila ya tuviera un logo).
+- Los dos RoboCop de Dreamcast (y el de 15 kHz) usan la captura del arcade de Data East (MAME `Robocop (World, revision 4)`).
+- Sin captura (se queda el logo): `h-jvstest`, `h-orc2c8` (OutRun 2006), `aw-force_five`, `aw-kenju`.
+- Los logos antiguos siguen en `/boot/config/images`; el CSV original, en `romsinfo.csv.bak_osmfotos`.
+- Gracias a libretro-thumbnails (capturas) y a MAME y sus autores por los juegos de origen.
