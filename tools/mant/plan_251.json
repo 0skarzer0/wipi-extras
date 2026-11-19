@@ -1,0 +1,8 @@
+{"borrar": ["h-orc2c5_dc2naomict.bin.gz", "h-orc2c6_dc2naomict.bin.gz", "h-orc2c7_dc2naomict.bin.gz"],
+ "borrar_temporales": true, "borrar_vmu_huerfanas": true, "quitar_filas_sin_rom": true,
+ "copiar_png": ["pv-n1_airline_pilots_840_0005_.png", "pv-h_orc2c8_outrun2.png"],
+ "imagen": {"h-orc2c8_dc2naomict.bin.gz": "pv-h_orc2c8_outrun2.png"},
+ "filas_nuevas": [
+  "\"Sega Naomi\",n1-airline_pilots-[840-0005].bin.gz,pv-n1_airline_pilots_840_0005_.png,alpilota.mp4,\"Airline Pilots\",\"Airline Pilot\",Sega,1999,Flying,\"AAMA - Green (Suitable For All Ages)\",Horizontal,\"Analog (Stick)\",Yes,No,generic-analogue,none,BAE0,n1-airline_pilots_BAE0.bin.gz",
+  "\"Sega Naomi2\",initiald_exp_reva_vcard.bin.gz,pv-n2_initiald_exp_reva_ct.png,initdexp.mp4,\"Initial D (CTaxi, VCard)\",\"Initial D\\nCT VCard\",Sega,2002,Driving,\"AAMA - Green (Suitable For All Ages)\",Horizontal,\"Analog (Driving)\",Yes,No,crazy-taxi,initial-d,BFFA,initiald_exp_reva_vcard.bin.gz"
+ ]}

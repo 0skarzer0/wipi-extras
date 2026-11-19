@@ -77,3 +77,6 @@ semillas 0 (`osm-fotos/libnaomi-patch/`). Si se recompila el menú, NO olvidar e
 ## 2026-11-19: juego al azar tras 60 s sin tocar nada
 `ATTRACT_IDLE_SECONDS` en `osm-fotos/netbootmenu/screens.c`. Menú md5 b14b1e07568ee12203c628105530c286, instalado en .250 y .251.
 Duda pendiente: en el mueble del volante, si el ruido del volante analógico generase pulsaciones, el temporizador no llegaría a saltar.
+
+## 2026-11-19: limpieza de ROMs y CSV
+Ver `tools/mant/README.md`.

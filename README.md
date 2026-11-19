@@ -10,6 +10,7 @@ originales, y se pueden deshacer.
 | [`vmu/`](vmu/README.md) | Los juegos de Dreamcast convertidos con [dc2naomi](https://github.com/0skarzer0/dc2naomi) guardan su Visual Memory en un fichero `.vmu` junto a la imagen | En uso en dos Raspberry |
 | [`initiald-cards/`](initiald-cards/README.md) | Emulación de las tarjetas de Initial D | Por empezar |
 
+- `tools/mant/`: auditoría y limpieza de ROMs y `romsinfo.csv`.
 - `fixes/`: arreglos de WiPi (p. ej. "Communication Error!" por varias instancias del menú).
 
 ## Instalación
