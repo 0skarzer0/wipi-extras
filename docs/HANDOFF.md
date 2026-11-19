@@ -17,8 +17,11 @@ Para retomar el trabajo en otra sesión (Claude u otra persona).
 
 - **osm-fotos:** instalado y probado en la Pi del Crazy Taxi: «está perfecto». 54 juegos, 53 con foto. Después se
   pasó `./install.sh osm` y `./install.sh vmu` (repo copiado en `/root/wipi-extras`): `netbootmenu.bin`, `.fotos` y
-  `.dark` son el menú con fotos (con el tema oscuro se conservan) y los originales están en `*.orig_osm`. Falta
-  instalarlo en la `.250`.
+  `.dark` son el menú con fotos (con el tema oscuro se conservan) y los originales están en `*.orig_osm`.
+  Instalado también en la `.250` (mueble estándar) el mismo día con `./install.sh osm`: 169 juegos en el menú,
+  139 con foto; las 30 sin foto son conversiones de Dreamcast con la columna de la imagen vacía en el CSV. Las fotos
+  ya quedaron convertidas en caché (la primera vez, 68 s en esa Pi). El menú que estaba abierto en ese momento sigue
+  siendo el viejo hasta que WiPi lo vuelva a lanzar.
 - **vmu:** instalado en las dos Raspberry (desde dc2naomi, 2026-11-10); los scripts de aquí son idénticos.
 - **initiald-cards:** sin empezar.
 
@@ -46,7 +49,7 @@ Para retomar el trabajo en otra sesión (Claude u otra persona).
 
 ## Ideas pendientes
 
-- Instalar el menú con fotos en la `.250` (`./install.sh osm`).
+- Poner foto a las conversiones de Dreamcast de la `.250` (columna 3 de `romsinfo.csv` vacía).
 - Versión clara del menú con fotos: el binario `.light` de WiPi se diferencia del `.dark` en pocos bytes (seguramente
   los colores; sin comprobar).
 - Que dc2naomi tome los scripts de la VMU de aquí, para no tener dos copias.
