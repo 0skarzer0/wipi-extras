@@ -8,6 +8,9 @@
 #include "config.h"
 #include "thumbs.h"
 
+// Bytes read from the cart at a time with interrupts disabled (see thumbs_load).
+#define THUMB_READ_CHUNK 512
+
 typedef struct __attribute__((__packed__))
 {
     uint32_t offset;
@@ -105,7 +108,20 @@ texture_description_t *thumbs_get(unsigned int game, int *width, int *height)
     }
 
     // The DIMM is read in whole 32-bit words.
-    cart_read(packed, entry->offset, (entry->length + 3) & ~3);
+    // cart_read() keeps interrupts disabled for the whole read, and the net dimm talks to us
+    // (peek/poke of the message registers) through interrupts. Reading a big picture in one go
+    // starves it and the menu ends in "Communication Error!", so read it in small pieces.
+    {
+        uint32_t total = (entry->length + 3) & ~3;
+        uint32_t done = 0;
+        while (done < total)
+        {
+            uint32_t chunk = total - done;
+            if (chunk > THUMB_READ_CHUNK) { chunk = THUMB_READ_CHUNK; }
+            cart_read((uint8_t *)packed + done, entry->offset + done, chunk);
+            done += chunk;
+        }
+    }
 
     // Unpack straight into the top left corner of the square texture.
     static uint16_t row[THUMB_SIZE];

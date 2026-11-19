@@ -69,3 +69,5 @@ grandes en trozos de 4 MB con `put*.sh` y unir con `cat`; no usar `grep csv` sob
 ## 2026-11-19: "Communication Error!" en las dos NAOMI
 Había varias instancias de `netdimm_menu` a la vez (WiPi no cierra la anterior en modo normal). Se arregló con `fixes/patch_menulauncher.py`
 (aplicado en .250 y .251) y se dejó una sola instancia en cada Pi. Ver `fixes/README.md`.
+Segunda causa (al elegir juego): lectura de la foto con `cart_read` de una vez = interrupciones desactivadas demasiado tiempo.
+Se lee en trozos de 512 B (ver `fixes/README.md`). Menú nuevo instalado en .250 y .251.
