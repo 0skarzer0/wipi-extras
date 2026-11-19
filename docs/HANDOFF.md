@@ -1,0 +1,52 @@
+# HANDOFF: estado, montaje y trampas
+
+Para retomar el trabajo en otra sesión (Claude u otra persona).
+
+## Montaje del usuario
+
+- **Mueble Crazy Taxi (NAOMI 2, volante):** Raspberry con WiPi en `192.168.68.251` (antes `.60`; se cambió el
+  2026-11-19 porque otro aparato de la red cogía la `.60`), NetDIMM en `10.0.0.4`.
+- **Mueble estándar (palancas):** Raspberry en `192.168.68.250`, NetDIMM en `10.0.0.3`.
+- Usuario `root`. La contraseña la da el usuario (`info.txt` de su carpeta `Documents\dc2naomi`); **nunca** se
+  escribe en el repositorio.
+- Las Raspberry no tienen salida a Internet (no resuelven `github.com`) ni reloj: la hora sale de 2022.
+- Desde la sesión se llega a ellas por SSH a través de la app de escritorio (carpeta `dc2naomi` conectada).
+
+## Estado (2026-11-19)
+
+- **osm-fotos:** instalado y probado en la Pi del Crazy Taxi: «está perfecto». 54 juegos, 53 con foto. Instalado a
+  mano (antes de existir `install.sh`): `netbootmenu.bin` y `netbootmenu.bin.fotos` son el menú con fotos y hay
+  copias `.orig_osm`; **`netbootmenu.bin.dark` todavía es el original**, así que si se elige el tema en la web se
+  pierden las fotos hasta pasar `./install.sh osm` (que ya pone también el `.dark`). Falta instalarlo en la `.250`.
+- **vmu:** instalado en las dos Raspberry (desde dc2naomi, 2026-11-10); los scripts de aquí son idénticos.
+- **initiald-cards:** sin empezar.
+
+## Trampas aprendidas
+
+- **Subir ficheros por SSH:** un envoltorio de `ssh` que redirige la entrada a `/dev/null` (para que no se quede
+  esperando) **sube ficheros vacíos** si se usa con `cat > fichero`. Le pasó al menú el 2026-11-19: el
+  `netbootmenu.bin` quedó vacío un minuto. Para subir, un `ssh ... "cat > X" < local` sin otra redirección, y comprobar
+  siempre el md5 en la Pi antes de usar el fichero.
+- **`pkill -f netdimm_menu` por SSH** se mata a sí mismo (la orden remota contiene el texto). Usar un patrón que no
+  aparezca en la propia orden (por ejemplo `pkill -f "[n]etdimm_menu"`).
+- **Lanzar el menú a mano** (reinicia la placa con el menú):
+  `setsid nohup python3 /sbin/piforce/dm_netboot/netdimm_menu 10.0.0.4 /boot/roms --verbose > /root/osm.log 2>&1 < /dev/null &`.
+  El registro sale vacío un buen rato: Python lo guarda en búfer.
+- **Tema del menú:** `switchmode.py` de WiPi copia `netbootmenu.bin.light` o `.dark` encima de `netbootmenu.bin`.
+- **Código de DragonMinded:** `DragonMinded/netboot` y `DragonMinded/libnaomi` han desaparecido de GitHub
+  (noviembre de 2026). En la Pi solo está el menú compilado. Copias usadas: `ArcadeHustle/netboot` (`2008fa7`) y
+  `sega-dreamcast/libnaomi` (`f32c2f4`).
+- **Toolchain de libnaomi:** `setup/download.sh`, `unpack.sh` y `make CFLAGS="-O2 -fpermissive"
+  CXXFLAGS="-O2 -fpermissive -std=gnu++14"` (con GCC 13 del sistema; unos 45 min con 2 núcleos). Hace falta `texinfo`.
+  Luego `make -C 3rdparty/{zlib,libbz2,libpng,freetype} install` (zlib 1.2.12 hay que bajarlo de
+  `https://zlib.net/fossils/` a `3rdparty/zlib/download/`) y volver a compilar e instalar libnaomi.
+- El `netdimm_menu.py` de WiPi lee `/var/www/html/csv/romsinfo.csv`: entran los juegos NAOMI/Atomiswave con la
+  columna 13 a `Yes` y la imagen en `/boot/roms`; la foto es la columna 3.
+
+## Ideas pendientes
+
+- Instalar el menú con fotos en la `.250` y pasar `install.sh osm` en la `.251` para que el tema oscuro lo conserve.
+- Versión clara del menú con fotos: el binario `.light` de WiPi se diferencia del `.dark` en pocos bytes (seguramente
+  los colores; sin comprobar).
+- Que dc2naomi tome los scripts de la VMU de aquí, para no tener dos copias.
+- Tarjetas de Initial D.
