@@ -6,7 +6,7 @@ originales, y se pueden deshacer.
 
 | Carpeta | Qué hace | Estado |
 |---|---|---|
-| [`osm-fotos/`](osm-fotos/README.md) | El menú en pantalla (OSM) enseña la foto del juego seleccionado, la misma de la web del WiPi | Probado en placa (NAOMI 2, mueble Crazy Taxi) |
+| [`osm-fotos/`](osm-fotos/README.md) | El menú en pantalla (OSM) enseña la foto del juego seleccionado, la misma de la web del WiPi; con receta para poner capturas a los juegos que no tienen | Probado en placa (NAOMI 2, mueble Crazy Taxi) |
 | [`vmu/`](vmu/README.md) | Los juegos de Dreamcast convertidos con [dc2naomi](https://github.com/0skarzer0/dc2naomi) guardan su Visual Memory en un fichero `.vmu` junto a la imagen | En uso en dos Raspberry |
 | [`initiald-cards/`](initiald-cards/README.md) | Emulación de las tarjetas de Initial D | Por empezar |
 
@@ -40,6 +40,8 @@ Más detalle, trampas aprendidas y cómo seguir: [`docs/HANDOFF.md`](docs/HANDOF
   de la NetDIMM con el que se lee la memoria de la placa.
 - **KallistiOS**, en cuyos scripts se basa el toolchain de libnaomi; **zlib**, **libpng**, **bzip2**, **FreeType**,
   **DejaVu Sans** y **Pillow**, que usa el menú con fotos.
+- **[libretro-thumbnails](https://github.com/libretro-thumbnails)**, de donde salen las capturas de partida de los
+  juegos de Dreamcast que no tenían foto (`osm-fotos/imagenes/`).
 - **Flycast**, **MaplePad** (mackieks), **libevmu** (Falco Girgis), **dcvmu-tool** (bucanero), **waterbear**
   (wtetzner) y **chao** (lordbananza), que sirvieron para la VMU (detalle en [`vmu/`](vmu/README.md)).
 - **[dc2naomi](https://github.com/0skarzer0/dc2naomi)**, de donde salen los scripts de la VMU.

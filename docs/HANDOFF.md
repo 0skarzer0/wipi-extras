@@ -22,6 +22,11 @@ Para retomar el trabajo en otra sesión (Claude u otra persona).
   139 con foto; las 30 sin foto son conversiones de Dreamcast con la columna de la imagen vacía en el CSV. Las fotos
   ya quedaron convertidas en caché (la primera vez, 68 s en esa Pi). El menú que estaba abierto en ese momento sigue
   siendo el viejo hasta que WiPi lo vuelva a lanzar.
+- **Fotos de las conversiones de Dreamcast (2026-11-19, tarde):** capturas de partida de libretro-thumbnails en los
+  juegos `dc-*` sin imagen: 28 en la `.250` y 1 en la `.251` (ver `osm-fotos/imagenes/README.md`). Ahora todos los
+  juegos del menú tienen foto (`.251`: 54 de 54; `.250`: 167 de 169) salvo `dc-robocop_dncd` y `dc-robocop_con`. Los
+  PNG nuevos se llaman `dc-<juego>.png` en `/boot/config/images`; copias de los CSV en `romsinfo.csv.bak_osmfotos`.
+  El usuario pidió capturas de gameplay, no logos; el resto de juegos (NAOMI/Atomiswave) conservan los logos del WiPi.
 - **vmu:** instalado en las dos Raspberry (desde dc2naomi, 2026-11-10); los scripts de aquí son idénticos.
 - **initiald-cards:** sin empezar.
 
@@ -49,7 +54,8 @@ Para retomar el trabajo en otra sesión (Claude u otra persona).
 
 ## Ideas pendientes
 
-- Poner foto a las conversiones de Dreamcast de la `.250` (columna 3 de `romsinfo.csv` vacía).
+- Foto para los dos RoboCop (`dc-robocop_dncd`, `dc-robocop_con`): no hay en ninguna base; el usuario debe pasar una
+  imagen o decidir cuál usar.
 - Versión clara del menú con fotos: el binario `.light` de WiPi se diferencia del `.dark` en pocos bytes (seguramente
   los colores; sin comprobar).
 - Que dc2naomi tome los scripts de la VMU de aquí, para no tener dos copias.
