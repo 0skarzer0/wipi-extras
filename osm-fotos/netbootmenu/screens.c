@@ -522,7 +522,7 @@ void send_game_options(game_options_t *parsed_options)
 #define SCREEN_GAME_LOAD 7
 #define SCREEN_GAME_UNPACK 8
 
-#define MAX_WAIT_FOR_COMMS 5.0
+#define MAX_WAIT_FOR_COMMS 30.0  // wipi-extras: WiPi descomprime la ROM .gz antes de contestar (era 5.0)
 #define MAX_WAIT_FOR_SAVE 8.0
 
 #define ERROR_BOX_WIDTH 300
