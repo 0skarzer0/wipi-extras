@@ -9,15 +9,16 @@ Para retomar el trabajo en otra sesión (Claude u otra persona).
 - **Mueble estándar (palancas):** Raspberry en `192.168.68.250`, NetDIMM en `10.0.0.3`.
 - Usuario `root`. La contraseña la da el usuario (`info.txt` de su carpeta `Documents\dc2naomi`); **nunca** se
   escribe en el repositorio.
-- Las Raspberry no tienen salida a Internet (no resuelven `github.com`) ni reloj: la hora sale de 2022.
+- Las Raspberry no tienen salida a Internet (no resuelven `github.com`) ni reloj: la hora sale de 2022 (tar avisa de
+  fechas «en el futuro»: no pasa nada). Para llevar el repositorio, un `.tgz` subido por SSH.
 - Desde la sesión se llega a ellas por SSH a través de la app de escritorio (carpeta `dc2naomi` conectada).
 
 ## Estado (2026-11-19)
 
-- **osm-fotos:** instalado y probado en la Pi del Crazy Taxi: «está perfecto». 54 juegos, 53 con foto. Instalado a
-  mano (antes de existir `install.sh`): `netbootmenu.bin` y `netbootmenu.bin.fotos` son el menú con fotos y hay
-  copias `.orig_osm`; **`netbootmenu.bin.dark` todavía es el original**, así que si se elige el tema en la web se
-  pierden las fotos hasta pasar `./install.sh osm` (que ya pone también el `.dark`). Falta instalarlo en la `.250`.
+- **osm-fotos:** instalado y probado en la Pi del Crazy Taxi: «está perfecto». 54 juegos, 53 con foto. Después se
+  pasó `./install.sh osm` y `./install.sh vmu` (repo copiado en `/root/wipi-extras`): `netbootmenu.bin`, `.fotos` y
+  `.dark` son el menú con fotos (con el tema oscuro se conservan) y los originales están en `*.orig_osm`. Falta
+  instalarlo en la `.250`.
 - **vmu:** instalado en las dos Raspberry (desde dc2naomi, 2026-11-10); los scripts de aquí son idénticos.
 - **initiald-cards:** sin empezar.
 
@@ -45,7 +46,7 @@ Para retomar el trabajo en otra sesión (Claude u otra persona).
 
 ## Ideas pendientes
 
-- Instalar el menú con fotos en la `.250` y pasar `install.sh osm` en la `.251` para que el tema oscuro lo conserve.
+- Instalar el menú con fotos en la `.250` (`./install.sh osm`).
 - Versión clara del menú con fotos: el binario `.light` de WiPi se diferencia del `.dark` en pocos bytes (seguramente
   los colores; sin comprobar).
 - Que dc2naomi tome los scripts de la VMU de aquí, para no tener dos copias.
